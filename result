@@ -1,0 +1,38 @@
+digraph G {
+subgraph cluster_C3 {
+node_31;
+node_32;
+node_31;
+node_31;
+node_31;
+}
+
+subgraph cluster_C2 {
+node_21;
+node_22;
+node_22;
+node_22;
+node_22;
+}
+
+subgraph cluster_C1 {
+node_11;
+node_12;
+node_11;
+node_11;
+node_12;
+node_12;
+}
+
+subgraph cluster_C4 {
+}
+
+node_11 -> node_12;
+node_21 -> node_22;
+node_31 -> node_32;
+node_31 -> node_22;
+node_31 -> node_11;
+node_22 -> node_11;
+node_12 -> node_22;
+node_31 -> node_12;
+}
