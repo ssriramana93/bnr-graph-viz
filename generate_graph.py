@@ -3,6 +3,7 @@ import json
 
 #class JSONFormatExtractor:
 component_list = ["C1","C2","C3","C4"]
+content_type_edge_color_map = {"ROSMSG": 'green', "JSON": 'blue'}
 
 
 class GraphGenerator:
@@ -27,18 +28,23 @@ class GraphGenerator:
         for cluster_name, cluster in self.cluster.iteritems():
             self.graph.add_subgraph(cluster)
 
+    def _process_connection(self, connection):
+        src = pydot.Node(connection["producer_process_name"])
+        src_cluster = connection["producer_process_component"]
+        self._add_node_to_component(src_cluster, src)
+        dst = pydot.Node(connection["consumer_process_name"])
+        dst_cluster = connection["consumer_process_component"]
+        self._add_node_to_component(dst_cluster, dst)
+        edge_attr = {}
+        edge = pydot.Edge(src, dst)
+        edge_attr['color'] = content_type_edge_color_map[connection['content_type']]
+        edge = pydot.Edge(src, dst, color=content_type_edge_color_map[connection['content_type']])
+        self.graph.add_edge(edge)
+
 
     def generate_graph(self):
         for connection in self.data["connections"]:
-            src = pydot.Node(connection["producer_process_name"])
-            src_cluster = connection["producer_process_component"]
-            self._add_node_to_component(src_cluster, src)
-            dst = pydot.Node(connection["consumer_process_name"])
-            dst_cluster = connection["consumer_process_component"]
-            self._add_node_to_component(dst_cluster, dst)
-            edge = pydot.Edge(src, dst)
-            self.graph.add_edge(edge)
-
+            self._process_connection(connection)
 
 
     def get_dot_file(self, path="result", file_format=".gif"):

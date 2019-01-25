@@ -27,12 +27,12 @@ node_12;
 subgraph cluster_C4 {
 }
 
-node_11 -> node_12;
-node_21 -> node_22;
-node_31 -> node_32;
-node_31 -> node_22;
-node_31 -> node_11;
-node_22 -> node_11;
-node_12 -> node_22;
-node_31 -> node_12;
+node_11 -> node_12  [color=green];
+node_21 -> node_22  [color=blue];
+node_31 -> node_32  [color=green];
+node_31 -> node_22  [color=green];
+node_31 -> node_11  [color=blue];
+node_22 -> node_11  [color=green];
+node_12 -> node_22  [color=blue];
+node_31 -> node_12  [color=green];
 }
